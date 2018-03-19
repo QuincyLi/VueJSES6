@@ -23,10 +23,13 @@ export default {
 .container{
   height: 100%
 }
-.el-header, .el-footer {
+.el-header{
     background-color: #332FEF;
     color: #333;
     text-align: center;
     line-height: 60px;
-  }
+}
+.el-main{
+  background-color: #FAFCFF;
+}
 </style>
