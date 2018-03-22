@@ -31,7 +31,7 @@
       </el-row>
     </el-col>
     <el-col :span="3" class="announcement">
-      <Announcement/>
+      <Announcement v-bind:title="title" />
     </el-col>
   </el-row>
 </template>
@@ -45,6 +45,7 @@ export default {
   },
   data () {
     return {
+      title: '上一迭代 冲刺榜',
       msg: 'Welcome to Your Vue.js App',
       percentages: [
         {name: '基础建设', value: 50},

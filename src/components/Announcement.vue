@@ -2,7 +2,7 @@
     <el-row>
       <el-row class="announcementTitle">
          <el-row>
-           <span class="titleFont">上一迭代 冲刺榜</span>
+           <span class="titleFont">{{this.title}}</span>
          </el-row>
          <el-row style="display:flex">
           <el-col :span="6">
@@ -15,7 +15,7 @@
           </el-col>
          </el-row>
       </el-row>
-      <el-row>
+      <el-row style="background-color: rgba(255, 247, 247, 1)">
         <el-row class="listHeight">
           <el-col :span="8" class="listContent">
             <img src="@/assets/img/ic_teamsilver.png" class="img"/>
@@ -54,7 +54,9 @@
 </template>
 
 <script>
-    
+export default {
+  props: ['title']
+}
 </script>
 
 <style>

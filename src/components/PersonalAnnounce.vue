@@ -1,51 +1,53 @@
 <template>
     <el-row>
-      <el-row class="announcementTitle">
+      <el-row class="announcementTitleOfPerson">
          <el-row>
-           <span class="titleFont">上一迭代 冲刺榜</span>
+           <span class="titleFontOfPerson">{{this.title}}</span>
          </el-row>
          <el-row style="display:flex">
-          <el-col :span="6">
-            <img src="@/assets/img/ic_Teamgold.png" class="img"/>
-            <span class="detailFont">小组1</span>
-            <span class="detailFont">100%</span>
+          <el-col :span="8">
+            <img src="@/assets/img/ic_gold.png" class="img icon"/>
           </el-col>
-          <el-col :span="18">
-            <img src="@/assets/img/team.png" class="img"/>
+          <el-col :span="8">
+            <img src="@/assets/img/head.png" class="img"/>
+            <span class="detailFontOfPerson">赵三三</span>
+          </el-col>
+          <el-col :span="8">
+            <span class="detailFontOfPerson icon">119h</span>
           </el-col>
          </el-row>
       </el-row>
-      <el-row>
-        <el-row class="listHeight">
-          <el-col :span="8" class="listContent">
-            <img src="@/assets/img/ic_teamsilver.png" class="img"/>
+      <el-row style="background-color: rgba(239, 246, 255, 1)">
+        <el-row class="listHeightOfPerson">
+          <el-col :span="8" class="listContentOfPerson">
+            <img src="@/assets/img/ic_silver.png" class="img"/>
           </el-col>
-          <el-col :span="8" class="listContent">
+          <el-col :span="8" class="listContentOfPerson">
             <span class="subtitle">小组2</span>
           </el-col>
-          <el-col :span="8" class="listContent">
+          <el-col :span="8" class="listContentOfPerson">
             <span class="subtitle">97%</span>
           </el-col>
         </el-row>
-        <el-row class="listHeight">
-          <el-col :span="8" class="listContent">
-            <img src="@/assets/img/ic_teamcopper.png" class="img"/>
+        <el-row class="listHeightOfPerson">
+          <el-col :span="8" class="listContentOfPerson">
+            <img src="@/assets/img/ic_copper.png" class="img"/>
           </el-col>
-          <el-col :span="8" class="listContent">
+          <el-col :span="8" class="listContentOfPerson">
             <span class="subtitle">小组3</span>
           </el-col>
-          <el-col :span="8" class="listContent">
+          <el-col :span="8" class="listContentOfPerson">
             <span class="subtitle">97%</span>
           </el-col>
         </el-row>
-        <el-row class="listHeight">
-          <el-col :span="8" class="listContent">
+        <el-row class="listHeightOfPerson">
+          <el-col :span="8" class="listContentOfPerson">
             <span class="subtitle">4</span>
           </el-col>
-          <el-col :span="8" class="listContent">
+          <el-col :span="8" class="listContentOfPerson">
             <span class="subtitle">小组3</span>
           </el-col>
-          <el-col :span="8" class="listContent">
+          <el-col :span="8" class="listContentOfPerson">
             <span class="subtitle">97%</span>
           </el-col>
         </el-row>
@@ -54,36 +56,41 @@
 </template>
 
 <script>
-    
+export default {
+  props: ['title']
+}
 </script>
 
-<style>
-.announcementTitle{
-  background: rgba(214,0,0,1);
+<style scoped>
+.announcementTitleOfPerson {
+  background: rgba(0, 102, 228, 1);
   height: 10%;
   min-height: 150px;
 }
-.titleFont{
+.titleFontOfPerson {
   color: white;
   display:block;
   text-align:center;
   margin-top: 15px;
   margin-bottom: 15px;
 }
-.detailFont{
+.detailFontOfPerson {
   color: white;
   display: block;
   text-align: center;
 }
-.listHeight{
+.listHeightOfPerson {
   height: 50px;
   display: flex;
 }
-.listContent{
+.listContentOfPerson {
   margin:auto
 }
-.img{
+.imgOfPerson {
   display:block;
   margin:auto;
+}
+.icon {
+  margin: 20px;
 }
 </style>

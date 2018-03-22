@@ -27,12 +27,12 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="6">
-      <el-col :span="11" style="margin:0 10px;">
-        <Announcement/>
+    <el-col :span="6" class="announcement">
+      <el-col :span="11" style="margin:0 10px;height: 100%;">
+        <PersonalAnnounce v-bind:title="personalTitle" />
       </el-col>
       <el-col :span="11">
-        <PersonalAnnounce/>
+        <Announcement v-bind:title="teamTitle" />
       </el-col>
     </el-col>
   </el-row>
@@ -45,6 +45,8 @@ export default {
   name: 'WorkTime',
   data () {
     return {
+      teamTitle: '上月 小组奋斗榜',
+      personalTitle: '上月 个人 TOP10',
       personalData: [
         {
           name: '张三三',
@@ -52,15 +54,15 @@ export default {
         },
         {
           name: '张三三',
-          percentage: 110.9
+          percentage: 70
         },
         {
           name: '张三三',
-          percentage: 110.9
+          percentage: 45
         },
         {
           name: '张三三',
-          percentage: 110.9
+          percentage: 20
         }
       ]
     }
@@ -84,7 +86,10 @@ export default {
 .personalName{
   position: absolute;
   color: white;
-  top: 0;
+  top: 2px;
   left: 15px;
+}
+.announcement{
+  min-height: 830px;
 }
 </style>
