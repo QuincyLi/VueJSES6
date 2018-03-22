@@ -10,8 +10,12 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="4">
-      <el-row></el-row>
+    <el-col :span="4" class="announcement">
+      <el-row>
+        <div class="announcementTitle">
+          <span class="titleFont">上一迭代 冲刺榜</span>
+        </div>
+      </el-row>
       <el-row></el-row>
     </el-col>
   </el-row>
@@ -58,5 +62,18 @@ export default {
 .subtitle{
   display: block;
   text-align: center;
+}
+.announcement{
+  min-height: 830px;
+}
+.announcementTitle{
+  background: rgba(214,0,0,1);
+  height: 10%;
+  min-height: 50px;
+}
+.titleFont{
+  color: white;
+  display:block;
+  text-align:center;
 }
 </style>
