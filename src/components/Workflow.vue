@@ -2,8 +2,11 @@
   <el-row>
     <el-col :span="20">
       <el-row class="progressBar">
-        <el-col :span="2" v-for="(percentage, index) in percentages">
-          <el-progress :key="index" type="circle" :percentage="percentage.value" v-bind:width=90 ></el-progress>
+        <el-col :span="2" v-for="(percentage, index) in percentages" v-bind:key="percentage.name">
+          <div class="content">
+            <el-progress type="circle" :percentage="percentage.value" v-bind:width=90 />
+            <span class="subtitle">{{percentage.name}}</span>
+          </div>
         </el-col>
       </el-row>
     </el-col>
@@ -34,7 +37,7 @@ export default {
         {name: '天擎', value: 90},
         {name: '天盾', value: 90},
         {name: '天数', value: 90},
-        {name: '天盾', value: 90},
+        {name: '天智', value: 90},
         {name: '产品', value: 90}
       ]
     }
@@ -45,6 +48,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .progressBar{
+  display: flex;
   background: rgba(235, 237, 240, 1)
+}
+.content{
+  margin: auto;
+  width: fit-content;
+}
+.subtitle{
+  display: block;
+  text-align: center;
 }
 </style>
