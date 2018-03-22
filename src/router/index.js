@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Workflow from '@/components/Workflow'
 import WorkTime from '@/components/workTime'
+import Carousel from '@/components/Carousel'
 
 Vue.use(Router)
 
@@ -15,5 +16,11 @@ export default new Router({
     path: '/workflow',
     name: 'Workflow',
     component: Workflow
-  }]
+  },
+  {
+    path: '/carousel',
+    name: 'Carousel',
+    component: Carousel
+  }
+  ]
 })

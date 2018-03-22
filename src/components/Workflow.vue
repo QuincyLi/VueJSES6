@@ -21,7 +21,7 @@
               <span>{{userStory.id}}</span>
             </el-col>
             <el-col :span="23" style="position:relative;margin:auto;">
-              <el-progress v-bind:percentage="userStory.percentage" :stroke-width="22"></el-progress>
+              <el-progress v-bind:percentage="userStory.percentage" :stroke-width="22" :status="isSuccess(userStory.percentage)" :show-text="true"></el-progress>
               <span class="userStory">
                 {{userStory.detail}}
               </span>
@@ -47,6 +47,11 @@ export default {
     return {
       title: '上一迭代 冲刺榜',
       msg: 'Welcome to Your Vue.js App',
+      isSuccess: (percentage) => {
+        if (percentage === 100) {
+          return 'success'
+        }
+      },
       percentages: [
         {name: '基础建设', value: 50},
         {name: '平台', value: 72},
