@@ -1,12 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Workflow from '@/components/Workflow'
+import WorkTime from '@/components/workTime'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
     path: '/',
+    name: 'Worktime',
+    component: WorkTime
+  },
+  {
+    path: '/workflow',
     name: 'Workflow',
     component: Workflow
   }]

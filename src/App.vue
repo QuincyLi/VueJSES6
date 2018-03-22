@@ -35,4 +35,8 @@ export default {
 .el-progress-bar{
   width: 99%;
 }
+.subtitle{
+  display: block;
+  text-align: center;
+}
 </style>
