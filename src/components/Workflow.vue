@@ -1,6 +1,6 @@
 <template>
   <el-row>
-    <el-col :span="20">
+    <el-col :span="21">
       <el-row class="progressBar">
         <el-col :span="2" v-for="(percentage, index) in percentages" v-bind:key="percentage.name">
           <div class="content">
@@ -10,27 +10,27 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-row class="personalDetail">
+        <el-row class="personalDetail" v-for="person in personalData" v-bind:key="person.name">
           <el-row class="personalName">
             <el-col>
-              <span>Quincy</span>
+              <span>{{person.name}}</span>
             </el-col>
           </el-row>
-          <el-row style="margin-top: 20px;display:flex;">
+          <el-row style="margin-top: 20px;display:flex;" v-for="userStory in person.userStorys" v-bind:key="userStory.id">
             <el-col :span="1" class="number">
-              <span>01</span>
+              <span>{{userStory.id}}</span>
             </el-col>
             <el-col :span="23" style="position:relative;margin:auto;">
-              <el-progress :percentage="70" :stroke-width="22"></el-progress>
+              <el-progress v-bind:percentage="userStory.percentage" :stroke-width="22"></el-progress>
               <span class="userStory">
-                故事点：实现CI（联编（双操作系统下）、发布）
+                {{userStory.detail}}
               </span>
             </el-col>
           </el-row>
         </el-row>
       </el-row>
     </el-col>
-    <el-col :span="4" class="announcement">
+    <el-col :span="3" class="announcement">
       <el-row class="announcementTitle">
          <el-row>
            <span class="titleFont">上一迭代 冲刺榜</span>
@@ -107,6 +107,43 @@ export default {
         {name: '天数', value: 90},
         {name: '天智', value: 90},
         {name: '产品', value: 90}
+      ],
+      personalData: [
+        {
+          name: '张三',
+          userStorys: [
+            {
+              id: '01',
+              detail: '故事点：实现CI（联编（双操作系统下）、发布）',
+              percentage: 70
+            },
+            {
+              id: '02',
+              detail: '故事点：实现CI（联编（双操作系统下）、发布）',
+              percentage: 50
+            },
+            {
+              id: '03',
+              detail: '故事点：实现CI（联编（双操作系统下）、发布）',
+              percentage: 40
+            }
+          ]
+        },
+        {
+          name: '李四',
+          userStorys: [
+            {
+              id: '01',
+              detail: '故事点：git源码管理，包括配置库规划及管理',
+              percentage: 70
+            },
+            {
+              id: '02',
+              detail: '故事点：实现CI（联编（双操作系统下）、发布）',
+              percentage: 100
+            }
+          ]
+        }
       ]
     }
   }

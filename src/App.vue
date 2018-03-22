@@ -32,4 +32,7 @@ export default {
 .el-main{
   background-color: #FAFCFF;
 }
+.el-progress-bar{
+  width: 99%;
+}
 </style>
