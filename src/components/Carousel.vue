@@ -1,26 +1,26 @@
 <template>
   <el-carousel indicator-position="outside" height="830">
     <el-carousel-item v-for="(imgSrc,index) in imgSrcs" :key="index">
-      <img v-bind:src="imgSrcWrapper(imgSrc)" />
+      <img v-bind:src="imgSrc" />
     </el-carousel-item>
   </el-carousel>
 </template>
 <script>
+import { getImages } from '@/api/apiServices'
 export default{
   name: 'Carousel',
   data: () => {
     return {
-      imgSrcs: [
-        'Angular.jpeg',
-        'Tech.jpg',
-        'React.jpeg',
-        'Vue.png',
-        'Basic.jpeg'
-      ],
+      imgSrcs: [],
       imgSrcWrapper: (imgSrc) => {
         return 'static/img/' + imgSrc
       }
     }
+  },
+  created: () => {
+    getImages().then((result) => {
+      this.imgSrcs = result.data
+    })
   }
 }
 </script>
