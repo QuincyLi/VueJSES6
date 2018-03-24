@@ -17,8 +17,22 @@
                 </div>
             </el-col>
         </el-row>
+        <el-row class="center-con">
+            <el-col :span="8">
+              <div class='slide'></div>
+            </el-col>
+            <el-col :span="8">
+                <div class='layout-item'>
+                    <router-link to='/carousel'>
+                        carousel
+                    </router-link>
+                </div>
+            </el-col>
+            <el-col :span="8">
+              <div class='slide' style="float: right"></div>
+            </el-col>
+        </el-row>
         <div class='opera-box'>
-            <div class='slide'></div>
             <dl class="upload-wrap">
                 <dt style='border-bottom:2px solid #000'>
                     <el-upload
@@ -38,7 +52,7 @@
                     </el-upload>
                 </dd>
             </dl>
-            <div class="slide"></div>
+
         </div>
     </div>
 </div>
@@ -79,15 +93,15 @@ export default{
 
 }
 .slide{
-    width: 20%;
+    width: 60%;
     height: 100px;
     background:#F14874;
     border-radius: 50%;
 }
 .upload-wrap{
     width: 300px;
-    height: 300px;
-    margin: 100px auto;
+    height: 200px;
+    margin: 24px auto;
     border: 50px solid red;
 }
 .upload-wrap dt,.upload-wrap dd{
