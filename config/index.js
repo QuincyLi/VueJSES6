@@ -11,9 +11,12 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/progress': {    //将www.exaple.com印射为/apis
-          target: 'http://192.168.10.180:8089',  // 接口域名
-          changeOrigin: true,  //是否跨域
+      '/progress': { // 将www.exaple.com印射为/apis
+        target: 'http://192.168.10.180:8089/progress', // 接口域名
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/progress': ''
+        }
       }
     },
     // Various Dev Server settings

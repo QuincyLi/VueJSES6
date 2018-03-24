@@ -1,12 +1,12 @@
 <template>
-  <el-carousel indicator-position="outside" height="830">
+  <el-carousel indicator-position="outside" style='width: 100%' height="830px">
     <el-carousel-item v-for="(imgSrc,index) in imgSrcs" :key="index">
-      <img v-bind:src="imgSrc" />
+      <img :src="`http://192.168.10.180:8089/progress/${imgSrc}`" style="width: 100%"/>
     </el-carousel-item>
   </el-carousel>
 </template>
 <script>
-import { getImages } from '@/api/apiServices'
+import { getReq,errorInfo } from '@/api/api'
 export default{
   name: 'Carousel',
   data: () => {
@@ -17,9 +17,16 @@ export default{
       }
     }
   },
-  created: () => {
-    getImages().then((result) => {
-      this.imgSrcs = result.data
+  created(){
+    this.$nextTick(()=>{
+       getReq('/query/images').then(res=>{
+          const {errcode,message,data} = res ;
+          if(errcode == 0){ 
+            this.imgSrcs = data;
+          }else {
+            errorInfo(errcode,message);
+          }
+      });
     })
   }
 }

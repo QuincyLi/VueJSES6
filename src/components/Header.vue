@@ -1,12 +1,19 @@
 <template>
-    <div class="header">
+    <div class="page-header">
+      <div class="center-con">
         <span class="title">深蓝中控项目冲刺</span>
-        <el-select v-model="value" placeholder="请选择" class="sprint">
+        <el-select 
+          v-model="value" 
+          placeholder="请选择" 
+          class="sprint"
+          @change="selecChange" 
+        >
           <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
-            :value="item.value">
+            :value="item.value"
+            >
           </el-option>
         </el-select>
         <span class="date">
@@ -15,44 +22,53 @@
         <span class="remainingDate">
             1天16小时5分
         </span>
+      </div>
+        
     </div>
 </template>
 
 <script>
+import { getReq,errorInfo } from '@/api/api'
   export default {
     name: 'Header',
     data () {
       return {
-        options: [{
-          value: '选项1',
-          label: '迭代1'
-        }, {
-          value: '选项2',
-          label: '迭代2'
-        }, {
-          value: '选项3',
-          label: '迭代3'
-        }, {
-          value: '选项4',
-          label: '迭代4'
-        }, {
-          value: '选项5',
-          label: '迭代5'
-        }],
         value: ''
+      }
+    },
+    props: ["options"],
+    watch: {
+      options(newVal){
+        const option = newVal[newVal.length-1];
+        this.value =  option.value;
+        this.$emit('selectChange',this.value);
       }
     },
     computed: {
       getDate: () => {
         return '2018.2.21~2018.2.28'
       }
+    },
+    methods: {
+      selecChange(val){
+        this.$emit('selectChange',val);
+      }
+    },
+    created(){
+      this.$nextTick(()=>{
+      })
     }
   }
 </script>
 
 <style scoped>
-.header{
-  height: 100%;
+.page-header{
+    background-color: #332FEF;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+    height: 60px;
+    margin-bottom: 20px;
 }
 .title{
   color: #FFFFFF;

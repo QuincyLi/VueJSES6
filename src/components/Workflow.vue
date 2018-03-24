@@ -1,110 +1,152 @@
 <template>
-  <el-row>
-    <el-col :span="21">
-      <el-row class="progressBar">
-        <el-col :span="2" v-for="(percentage, index) in percentages" v-bind:key="percentage.name">
-          <div class="content">
-            <el-progress type="circle" :percentage="percentage.value" v-bind:width=90 />
-            <span class="subtitle">{{percentage.name}}</span>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-row class="personalDetail" v-for="person in personalData" v-bind:key="person.name">
-          <el-row class="personalName">
-            <el-col>
-              <span>{{person.name}}</span>
-            </el-col>
-          </el-row>
-          <el-row style="margin-top: 20px;display:flex;" v-for="userStory in person.userStorys" v-bind:key="userStory.id">
-            <el-col :span="1" class="number">
-              <span>{{userStory.id}}</span>
-            </el-col>
-            <el-col :span="23" style="position:relative;margin:auto;">
-              <el-progress v-bind:percentage="userStory.percentage" :stroke-width="22" :status="isSuccess(userStory.percentage)" :show-text="true"></el-progress>
-              <span class="userStory">
-                {{userStory.detail}}
-              </span>
-            </el-col>
+  <div class="wrap">
+    <Header :options='options' @selectChange='selectChange' />
+    <el-row class="center-con">
+      <el-col :span="21">
+        <el-row class="progressBar">
+          <el-col :span="2" 
+          v-for="(percentage, index) in percentages" 
+          :key="index" 
+          :class="percentageIndex===index?'percentage-active':''">
+            <div class="content" @click='checkGroup(index)'>
+              <el-progress type="circle" :percentage="percentage.ratio" :width='90' />
+              <span class="subtitle">{{percentage.titleOrName}}</span>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-row class="personalDetail" 
+            v-for="person in personalData" 
+            :key="person.name">
+            <el-row class="personalName">
+              <el-col>
+                <span>{{person.titleOrName}}</span>
+              </el-col>
+            </el-row>
+            <el-row style="margin-top: 20px;display:flex;" 
+              v-for="(userStory,userIndex) in person.child" 
+              :key="userIndex">
+              <el-col :span="1" class="number">
+                <span>{{userIndex}}</span>
+              </el-col>
+              <el-col :span="23" style="position:relative;margin:auto;">
+                <el-progress 
+                :percentage="userStory.ratio" 
+                :stroke-width="22" 
+                :status="isSuccess(userStory.ratio)" 
+                :show-text="true"></el-progress>
+                <span class="userStory">
+                  {{userStory.titleOrName}}
+                </span>
+              </el-col>
+            </el-row>
           </el-row>
         </el-row>
-      </el-row>
-    </el-col>
-    <el-col :span="3" class="announcement">
-      <Announcement v-bind:title="title" />
-    </el-col>
-  </el-row>
+      </el-col>
+      <el-col :span="3" class="announcement">
+        <Announcement 
+          :title="title"
+          :teamData='teamData' 
+          />
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
+import Header from './Header'
 import Announcement from './Announcement'
+import { getReq,errorInfo } from '@/api/api'
 export default {
   name: 'Workflow',
   components: {
+    Header,
     Announcement
   },
   data () {
     return {
       title: '上一迭代 冲刺榜',
-      msg: 'Welcome to Your Vue.js App',
       isSuccess: (percentage) => {
         if (percentage === 100) {
           return 'success'
         }
       },
-      percentages: [
-        {name: '基础建设', value: 50},
-        {name: '平台', value: 72},
-        {name: '天梭', value: 90},
-        {name: '天湖', value: 90},
-        {name: '天基', value: 90},
-        {name: '天匠', value: 90},
-        {name: '天坊', value: 90},
-        {name: '天擎', value: 90},
-        {name: '天盾', value: 90},
-        {name: '天数', value: 90},
-        {name: '天智', value: 90},
-        {name: '产品', value: 90}
-      ],
-      personalData: [
-        {
-          name: '张三',
-          userStorys: [
-            {
-              id: '01',
-              detail: '故事点：实现CI（联编（双操作系统下）、发布）',
-              percentage: 70
-            },
-            {
-              id: '02',
-              detail: '故事点：实现CI（联编（双操作系统下）、发布）',
-              percentage: 50
-            },
-            {
-              id: '03',
-              detail: '故事点：实现CI（联编（双操作系统下）、发布）',
-              percentage: 40
-            }
-          ]
-        },
-        {
-          name: '李四',
-          userStorys: [
-            {
-              id: '01',
-              detail: '故事点：git源码管理，包括配置库规划及管理',
-              percentage: 70
-            },
-            {
-              id: '02',
-              detail: '故事点：实现CI（联编（双操作系统下）、发布）',
-              percentage: 100
-            }
-          ]
-        }
-      ]
+      options: [],
+      percentages: [],
+      percentageIndex: '',
+      personalData: [],
+      teamData: []
     }
-  }
+  },
+  methods: {
+    selectChange(val){
+      getReq(`/query/redmine/${val}`).then(res=>{
+          const {errcode,message,data} = res ;
+          if(errcode == 0){ 
+            this.percentages = data;
+            this.checkGroup(0);
+          }else {
+            errorInfo(errcode,message);
+          }
+      });
+      getReq(`/query/redmine/${val}/rank`).then(res=>{
+          const {errcode,message,data} = res ;
+          if(errcode == 0){
+            let teamData =[];
+            data.map(item=>{
+              const itemObj  = {
+                name: item.titleOrName,
+                ratio: item.ratio
+              }
+              teamData.push(itemObj);
+            }) 
+            this.teamData = teamData;
+          }else {
+            errorInfo(errcode,message);
+          }
+      });
+    },
+    checkGroup(index){
+      this.percentageIndex = index;
+      this.personalData = this.percentages[index].child;
+    }
+  }, 
+   created(){
+    this.$nextTick(()=>{
+      getReq('/query/redmine/projects').then(res=>{
+          const {errcode,message,data} = res ;
+          if(errcode == 0){ 
+            this.options = Object.keys(data).map((item)=>{
+              const option = {
+                label: data[item],
+                value: item
+              }
+              return option;
+            });
+          }else {
+            errorInfo(errcode,message);
+          }
+      });
+      const month = localStorage.month;
+      getReq('/query/group/time',{name: month}).then(res=>{
+          const {errcode,message,data} = res ;
+          if(errcode == 0){
+            let teamData = [];
+            data.map(item=>{
+              const name = Object.keys(item)[0];
+              const itemObj = {
+                name: name,
+                rate: item[name]
+              }
+              teamData.push(itemObj);
+            })
+            this.teamData = teamData;
+          }else {
+            errorInfo(errcode,message);
+          }
+      });
+    })
+  } 
 }
 </script>
 
@@ -117,9 +159,14 @@ export default {
 .content{
   margin: auto;
   width: fit-content;
+  cursor: pointer;
 }
 .announcement{
   min-height: 830px;
+}
+.percentage-active{
+   background-color: #332FEF;
+   color: #fff
 }
 .personalDetail{
   height: auto;

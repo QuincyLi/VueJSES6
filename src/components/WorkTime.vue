@@ -1,50 +1,64 @@
 <template>
-  <el-row>
-    <el-col :span="18" class="announcement">
-      <el-row>
-        <el-col :span="1">
-          <span class="title">排名</span>
-        </el-col>
-        <el-col :span="9">
-          <span class="title">0-70h</span>
-        </el-col>
-        <el-col :span="6">
-          <span class="title">71-100h</span>
-        </el-col>
-        <el-col :span="6">
-          <span class="title">&#62;100</span>
-        </el-col>
-      </el-row>
-      <el-row class="personalDetail" v-for="(person, index) in personalData" :key=index>
-        <el-col :span="1">
-          <span class="title">{{index + 1}}</span>
-        </el-col>
-        <el-col :span="23" style="position:relative;">
-          <el-progress v-bind:percentage="person.time > 100 ? 100: person.time" :stroke-width="25" :show-text="false"></el-progress>
-          <span class="personalName">
-            {{person.name}}
-          </span>
-          <span class="personalTime">
-            {{person.time}}
-          </span>
-        </el-col>
-      </el-row>
-    </el-col>
-    <el-col :span="6" class="announcement">
-      <el-col :span="11" style="margin:0 10px;height: 100%;">
-        <PersonalAnnounce v-bind:title="personalTitle" v-bind:topTen="personalData" v-bind:afterThird="afterThird"/>
+  <div class="wrap">
+    <Header :options='options' @selectChange='selectChange' />
+    <el-row class="center-con">
+      <el-col :span="18" class="announcement">
+        <el-row>
+          <el-col :span="1">
+            <span class="title">排名</span>
+          </el-col>
+          <el-col :span="9">
+            <span class="title">0-70h</span>
+          </el-col>
+          <el-col :span="6">
+            <span class="title">71-100h</span>
+          </el-col>
+          <el-col :span="6">
+            <span class="title">&#62;100</span>
+          </el-col>
+        </el-row>
+        <el-row class="personalDetail" v-for="(person, index) in personalData" :key="index">
+          <el-col :span="1">
+            <span class="title">{{index + 1}}</span>
+          </el-col>
+          <el-col :span="23" style="position:relative;">
+            <el-progress 
+              :percentage="person.time > 100 ? 100: person.time" 
+              :stroke-width="25" 
+              :show-text="false"
+            ></el-progress>
+            <span class="personalName">
+              {{person.name}}
+            </span>
+            <span class="personalTime">
+              {{person.time}}
+            </span>
+          </el-col>
+        </el-row>
       </el-col>
-      <el-col :span="11">
-        <Announcement v-bind:title="teamTitle" />
+      <el-col :span="6" class="announcement">
+        <el-col :span="11" style="margin:0 10px;height: 100%;">
+          <PersonalAnnounce 
+          :title="personalTitle" 
+          :topTen="personalData" 
+          :afterThird="afterThird"/>
+        </el-col>
+        <el-col :span="11">
+          <Announcement 
+          :title="teamTitle"
+          :teamData='teamData' 
+          />
+        </el-col>
       </el-col>
-    </el-col>
-  </el-row>
+    </el-row>
+  </div>
 </template>
 
 <script>
+import Header from './Header'
 import Announcement from './Announcement'
 import PersonalAnnounce from './PersonalAnnounce'
-import { getWorkTime } from '@/api/apiServices'
+import { getReq,errorInfo } from '@/api/api'
 export default {
   name: 'WorkTime',
   data: () => {
@@ -52,23 +66,59 @@ export default {
       teamTitle: '上月 小组奋斗榜',
       personalTitle: '上月 个人 TOP10',
       personalData: [],
+      teamData: [],
       topTen: [],
-      afterThird: []
+      afterThird: [],
+      options: []
     }
   },
   components: {
+    Header,
     Announcement,
     PersonalAnnounce
   },
-  beforeCreate () {
-    getWorkTime().then((result) => {
-      this.personalData = result.data.data.sort((p1, p2) => {
-        return p2.time - p1.time
+  methods:{
+    selectChange(val){
+      localStorage.setItem('month',val);
+      getReq('/query/time',{name: val}).then(res=>{
+          const {errcode,message,data} = res ;
+          if(errcode == 0){ 
+            this.personalData = data;
+          }else {
+            errorInfo(errcode,message);
+          }
+      });
+      getReq('/query/group/time',{name: val}).then(res=>{
+          const {errcode,message,data} = res ;
+          if(errcode == 0){
+            let teamData = [];
+            data.map(item=>{
+              const name = Object.keys(item)[0];
+              const itemObj = {
+                name: name,
+                ratio: item[name]
+              }
+              teamData.push(itemObj);
+            })
+            this.teamData = teamData;
+          }else {
+            errorInfo(errcode,message);
+          }
+      });
+    }
+  },
+  created(){
+    this.$nextTick(()=>{
+      getReq('/query/excel/names').then(res=>{
+          const {errcode,message,data} = res ;
+          if(errcode == 0){ 
+            this.options = data;
+          }else {
+            errorInfo(errcode,message);
+          }
       })
-      this.topTen = this.personalData.slice(0, 9)
-      this.afterThird = this.personalData.slice(3, 9)
     })
-  }
+  } 
 }
 </script>
 
@@ -76,6 +126,9 @@ export default {
 .title {
   display:block;
   text-align: center;
+  line-height: 40px;
+  font-size: 14px;
+  font-weight: 700
 }
 .personalDetail {
   margin-top: 20px;
