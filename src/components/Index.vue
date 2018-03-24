@@ -22,7 +22,7 @@
             <dl class="upload-wrap">
                 <dt style='border-bottom:2px solid #000'>
                     <el-upload
-                        action="http://192.168.10.180:8089/progress/upload/excel"
+                        action="/progress/upload/excel"
                         >
                         <div class="upload-btn">
                             upload excel
@@ -31,7 +31,7 @@
                 </dt>
                 <dd>
                     <el-upload
-                        action="http://192.168.10.180:8089/progress/upload/images">
+                        action="progress/upload/images">
                         <div class="upload-btn">
                             upload img
                         </div>
