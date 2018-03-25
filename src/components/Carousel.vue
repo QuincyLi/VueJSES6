@@ -6,6 +6,7 @@
   </el-carousel>
 </template>
 <script>
+/* eslint-disable */
 import { getReq,errorInfo } from '@/api/api'
 export default{
   name: 'Carousel',

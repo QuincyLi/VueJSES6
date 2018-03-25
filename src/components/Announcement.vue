@@ -54,6 +54,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   props: ['title',"teamData"]
 }

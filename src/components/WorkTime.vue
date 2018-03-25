@@ -23,8 +23,8 @@
           </el-col>
           <el-col :span="23" style="position:relative;">
             <el-progress 
-              :percentage="person.time > 100 ? 100: person.time" 
-              :stroke-width="25" 
+              :percentage="person.time > 100 ? 100: person.time"
+              :stroke-width="25"
               :show-text="false"
             ></el-progress>
             <span class="personalName">
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Header from './Header'
 import Announcement from './Announcement'
 import PersonalAnnounce from './PersonalAnnounce'

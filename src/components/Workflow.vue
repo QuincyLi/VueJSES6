@@ -54,6 +54,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Header from './Header'
 import Announcement from './Announcement'
 import { getReq,errorInfo } from '@/api/api'
