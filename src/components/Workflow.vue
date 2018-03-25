@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <Header :options='options' @selectChange='selectChange' />
+    <Header :options='options' @selectChange='selectChange' :title='bigTitle' />
     <el-row class="center-con">
       <el-col :span="21">
         <el-row class="progressBar">
@@ -72,6 +72,7 @@ export default {
           return 'success'
         }
       },
+      bigTitle: '深蓝中控项目冲刺',
       options: [],
       percentages: [],
       percentageIndex: '',

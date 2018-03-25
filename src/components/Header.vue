@@ -1,7 +1,7 @@
 <template>
     <div class="page-header">
       <div class="center-con">
-        <span class="title">深蓝中控项目冲刺</span>
+        <span class="title">{{title}}</span>
         <el-select 
           v-model="value" 
           placeholder="请选择" 
@@ -40,13 +40,14 @@ import { getReq,errorInfo } from '@/api/api'
         toEndDatetime: ''
       }
     },
-    props: ["options"],
+    props: ["options", "title"],
     watch: {
       options(newVal){
         const option = newVal[newVal.length-1];
         this.value =  option.value;
         this.$emit('selectChange',this.value);
         getReq(`/query/redmine/${this.value}/cycle`).then((res) => {
+          if(!res.data) return
           const {endDate, startDate, toEndDatetime} = res.data;
           this.endDate = endDate;
           this.startDate = startDate;

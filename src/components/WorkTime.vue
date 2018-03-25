@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <Header :options='options' @selectChange='selectChange' />
+    <Header :options='options' @selectChange='selectChange' :title='title' />
     <el-row class="center-con">
       <el-col :span="18" class="announcement">
         <el-row>
@@ -8,13 +8,13 @@
             <span class="title">排名</span>
           </el-col>
           <el-col :span="9">
-            <span class="title">0-70h</span>
+            <span class="title" style="color:#f56c6c">0-50h</span>
           </el-col>
           <el-col :span="6">
-            <span class="title">71-100h</span>
+            <span class="title" style="color:#409EFF">51-70h</span>
           </el-col>
           <el-col :span="6">
-            <span class="title">&#62;100</span>
+            <span class="title" style="color:#67c23a">&#62;70</span>
           </el-col>
         </el-row>
         <el-row class="personalDetail" v-for="(person, index) in personalData" :key="index">
@@ -23,7 +23,7 @@
           </el-col>
           <el-col :span="23" style="position:relative;">
             <el-progress 
-              :percentage="person.time > 100 ? 100: (person.time * 0.6)"
+              :percentage="person.time >= 120 ? 100 : (person.time / 1.2)"
               :stroke-width="25"
               :show-text="false"
               :status=getStatus(person.time)
@@ -72,11 +72,12 @@ export default {
       topTen: [],
       afterThird: [],
       options: [],
+      title: '深蓝中控奋斗值',
       getStatus: (time) => {
-        if (time < 70) {
+        if (time < 50) {
           return 'exception'
         }
-        if(time >= 100){
+        if(time >= 71){
           return 'success'
         }
       }
@@ -137,7 +138,7 @@ export default {
   display:block;
   text-align: center;
   line-height: 40px;
-  font-size: 14px;
+  font-size: 25px;
   font-weight: 700
 }
 .personalDetail {
@@ -147,6 +148,7 @@ export default {
 .personalName {
   position: absolute;
   color: white;
+  font-size: 16px;
   top: 2px;
   left: 15px;
 }
@@ -156,7 +158,9 @@ export default {
 }
 .personalTime {
   position: absolute;
-  color: white;
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
   top: 2px;
   right: 25px;
 }
