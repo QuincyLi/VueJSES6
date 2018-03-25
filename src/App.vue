@@ -22,5 +22,6 @@ export default {
 .subtitle{
   display: block;
   text-align: center;
+  font-size: 15px;
 }
 </style>

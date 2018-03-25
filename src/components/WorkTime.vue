@@ -2,7 +2,7 @@
   <div class="wrap">
     <Header :options='options' @selectChange='selectChange' :title='title' />
     <el-row class="center-con">
-      <el-col :span="18" class="announcement">
+      <el-col :span="17" class="announcement">
         <el-row>
           <el-col :span="1">
             <span class="title">排名</span>
@@ -37,7 +37,7 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :span="6" class="announcement">
+      <el-col :span="7" class="announcement">
         <el-col :span="11" style="margin:0 10px;height: 100%;">
           <PersonalAnnounce 
           :title="personalTitle" 

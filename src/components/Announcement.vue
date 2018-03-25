@@ -5,12 +5,12 @@
            <span class="titleFont">{{this.title}}</span>
          </el-row>
          <el-row style="display:flex">
-          <el-col :span="6">
+          <el-col :span="8">
             <img src="@/assets/img/ic_Teamgold.png" class="img"/>
-            <span class="detailFont">{{teamData[0].name}}</span>
+            <span class="detailFont">{{teamData[0].name+ '组'}}</span>
             <span class="detailFont">{{teamData[0].ratio}}</span>
           </el-col>
-          <el-col :span="18">
+          <el-col :span="16">
             <img src="@/assets/img/team.png" class="img"/>
           </el-col>
          </el-row>
@@ -21,7 +21,7 @@
             <img src="@/assets/img/ic_teamsilver.png" class="img"/>
           </el-col>
           <el-col :span="8" class="listContent">
-            <span class="subtitle">{{teamData[1].name}}</span>
+            <span class="subtitle">{{teamData[1].name+ '组'}}</span>
           </el-col>
           <el-col :span="8" class="listContent">
             <span class="subtitle">{{teamData[1].ratio}}</span>
@@ -32,7 +32,7 @@
             <img src="@/assets/img/ic_teamcopper.png" class="img"/>
           </el-col>
           <el-col :span="8" class="listContent">
-            <span class="subtitle">{{teamData[2].name}}</span>
+            <span class="subtitle">{{teamData[2].name+ '组'}}</span>
           </el-col>
           <el-col :span="8" class="listContent">
             <span class="subtitle">{{teamData[2].ratio}}</span>
@@ -40,10 +40,10 @@
         </el-row>
         <el-row class="listHeight" v-for='(item,index) in teamData.slice(3)' :key='index' >
           <el-col :span="8" class="listContent">
-            <span class="subtitle">{{index+3}}</span>
+            <span class="subtitle">{{index + 4}}</span>
           </el-col>
           <el-col :span="8" class="listContent">
-            <span class="subtitle">{{item.name}}</span>
+            <span class="subtitle">{{item.name + '组'}}</span>
           </el-col>
           <el-col :span="8" class="listContent">
             <span class="subtitle">{{item.ratio}}</span>

@@ -42,7 +42,7 @@
         </el-row>
         <el-row class="listHeightOfPerson" v-for="(person, index) in afterThird" :key="index">
           <el-col :span="8" class="listContentOfPerson">
-            <span class="subtitle">{{index + 2}}</span>
+            <span class="subtitle">{{index + 3}}</span>
           </el-col>
           <el-col :span="8" class="listContentOfPerson">
             <span class="subtitle">{{person.name}}</span>
@@ -76,6 +76,7 @@ export default {
 }
 .detailFontOfPerson {
   color: white;
+  font-size: 15px;
   display: block;
   text-align: center;
 }
