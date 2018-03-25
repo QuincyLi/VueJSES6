@@ -20,7 +20,7 @@
             {{getDate}}
         </span>
         <span class="remainingDate">
-            1天16小时5分
+            {{toEndDatetime}}
         </span>
       </div>
         
@@ -34,7 +34,10 @@ import { getReq,errorInfo } from '@/api/api'
     name: 'Header',
     data () {
       return {
-        value: ''
+        value: '',
+        endDate: '',
+        startDate: '',
+        toEndDatetime: ''
       }
     },
     props: ["options"],
@@ -43,6 +46,12 @@ import { getReq,errorInfo } from '@/api/api'
         const option = newVal[newVal.length-1];
         this.value =  option.value;
         this.$emit('selectChange',this.value);
+        getReq(`/query/redmine/${this.value}/cycle`).then((res) => {
+          const {endDate, startDate, toEndDatetime} = res.data;
+          this.endDate = endDate;
+          this.startDate = startDate;
+          this.toEndDatetime = toEndDatetime;
+        });
       }
     },
     computed: {
@@ -51,12 +60,19 @@ import { getReq,errorInfo } from '@/api/api'
       }
     },
     methods: {
-      selecChange(val){
-        this.$emit('selectChange',val);
+      selecChange(val) {
+        this.$emit('selectChange', val);
+        getReq(`/query/redmine/${val}/cycle`).then((res) => {
+          const {endDate, startDate, toEndDatetime} = res.data;
+          this.endDate = endDate;
+          this.startDate = startDate;
+          this.toEndDatetime = toEndDatetime;
+        });
       }
     },
     created(){
       this.$nextTick(()=>{
+
       })
     }
   }

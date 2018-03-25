@@ -14,7 +14,7 @@
             </div>
           </el-col>
         </el-row>
-        <el-row>
+        <el-row class="displayDetail">
           <el-row class="personalDetail" 
             v-for="person in personalData" 
             :key="person.name">
@@ -185,5 +185,9 @@ export default {
 .number{
   font-size: 24px;
   margin: auto;
+}
+.displayDetail {
+  height: 750px;
+  overflow: auto;
 }
 </style>

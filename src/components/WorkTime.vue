@@ -23,9 +23,10 @@
           </el-col>
           <el-col :span="23" style="position:relative;">
             <el-progress 
-              :percentage="person.time > 100 ? 100: person.time"
+              :percentage="person.time > 100 ? 100: (person.time * 0.6)"
               :stroke-width="25"
               :show-text="false"
+              :status=getStatus(person.time)
             ></el-progress>
             <span class="personalName">
               {{person.name}}
@@ -70,7 +71,15 @@ export default {
       teamData: [],
       topTen: [],
       afterThird: [],
-      options: []
+      options: [],
+      getStatus: (time) => {
+        if (time < 70) {
+          return 'exception'
+        }
+        if(time >= 100){
+          return 'success'
+        }
+      }
     }
   },
   components: {
