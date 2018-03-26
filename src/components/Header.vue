@@ -16,17 +16,6 @@
             >
           </el-option>
         </el-select>
-        <nav class='nav-bar'>
-          <router-link to='/workFlow'>
-              workFlow
-          </router-link>
-          <router-link to='/worktime'>
-              worktime
-          </router-link>
-          <router-link to='/carousel'>
-              carousel
-          </router-link>
-        </nav>
         <span class="date">
             {{startDate?(startDate + '~' + endDate):''}}
         </span>

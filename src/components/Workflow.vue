@@ -14,34 +14,41 @@
             </div>
           </li>
         </ul>
-        <el-row class="displayDetail">
-          <el-row class="personalDetail" 
-            v-for="person in personalData" 
-            :key="person.name">
-            <el-row class="personalName">
-              <el-col>
-                <span>{{person.titleOrName}}组</span>
-              </el-col>
+          <marquee 
+            behavior="scroll"
+            direction="up"
+            scrolldelay="5"
+            height="500px"
+          >
+            <el-row class="displayDetail">
+                <el-row class="personalDetail" 
+                  v-for="person in personalData" 
+                  :key="person.name">
+                  <el-row class="personalName">
+                    <el-col>
+                      <span>{{person.titleOrName}}组</span>
+                    </el-col>
+                  </el-row>
+                  <el-row style="margin-top: 20px;display:flex;" 
+                    v-for="(userStory,userIndex) in person.child" 
+                    :key="userIndex">
+                    <el-col :span="1" class="number">
+                      <span>{{userIndex+1}}</span>
+                    </el-col>
+                    <el-col :span="23" style="position:relative;margin:auto;">
+                      <el-progress 
+                      :percentage="userStory.ratio" 
+                      :stroke-width="22" 
+                      :status="isSuccess(userStory.ratio)" 
+                      :show-text="true"></el-progress>
+                      <span class="userStory">
+                        {{userStory.titleOrName}}
+                      </span>
+                    </el-col>
+                  </el-row>
+                </el-row>
             </el-row>
-            <el-row style="margin-top: 20px;display:flex;" 
-              v-for="(userStory,userIndex) in person.child" 
-              :key="userIndex">
-              <el-col :span="1" class="number">
-                <span>{{userIndex+1}}</span>
-              </el-col>
-              <el-col :span="23" style="position:relative;margin:auto;">
-                <el-progress 
-                :percentage="userStory.ratio" 
-                :stroke-width="22" 
-                :status="isSuccess(userStory.ratio)" 
-                :show-text="true"></el-progress>
-                <span class="userStory">
-                  {{userStory.titleOrName}}
-                </span>
-              </el-col>
-            </el-row>
-          </el-row>
-        </el-row>
+          </marquee>
       </div>
       <div class="announcement" style='float:left;width:250px;'>
         <Announcement 
@@ -189,7 +196,7 @@ export default {
   margin: auto;
 }
 .displayDetail {
-  height: auto;
+  
   padding-bottom: 20px;
   padding-left: 20px;
   overflow: auto;
