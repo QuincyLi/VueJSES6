@@ -8,7 +8,7 @@
           <el-col :span="8">
             <img src="@/assets/img/ic_Teamgold.png" class="img"/>
             <span class="detailFont">{{teamData[0].name+ '组'}}</span>
-            <span class="detailFont">{{teamData[0].ratio}}</span>
+            <span class="detailFont">{{(teamData[0].ratio-0).toFixed(2)}}{{symbol}}</span>
           </el-col>
           <el-col :span="16">
             <img src="@/assets/img/team.png" class="img"/>
@@ -24,7 +24,7 @@
             <span class="subtitle">{{teamData[1].name+ '组'}}</span>
           </el-col>
           <el-col :span="8" class="listContent">
-            <span class="subtitle">{{teamData[1].ratio}}</span>
+            <span class="subtitle">{{(teamData[1].ratio-0).toFixed(2)}}{{symbol}}</span>
           </el-col>
         </el-row>
         <el-row class="listHeight">
@@ -35,7 +35,7 @@
             <span class="subtitle">{{teamData[2].name+ '组'}}</span>
           </el-col>
           <el-col :span="8" class="listContent">
-            <span class="subtitle">{{teamData[2].ratio}}</span>
+            <span class="subtitle">{{(teamData[2].ratio-0).toFixed(2)}}{{symbol}}</span>
           </el-col>
         </el-row>
         <el-row class="listHeight" v-for='(item,index) in teamData.slice(3)' :key='index' >
@@ -46,8 +46,10 @@
             <span class="subtitle">{{item.name + '组'}}</span>
           </el-col>
           <el-col :span="8" class="listContent">
-            <span class="subtitle">{{item.ratio}}</span>
+            <span class="subtitle">{{(item.ratio-0).toFixed(2)}}{{symbol}}</span>
           </el-col>
+        </el-row>
+        <el-row class="listHeight" v-for='(item,index) in (10-(teamData.length<10?teamData.length:0))' :key='index+4' >
         </el-row>
       </el-row>
     </el-row>
@@ -56,7 +58,7 @@
 <script>
 /* eslint-disable */
 export default {
-  props: ['title',"teamData"]
+  props: ['title',"teamData",'symbol']
 }
 </script>
 

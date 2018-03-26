@@ -4,7 +4,7 @@
          <el-row>
            <span class="titleFontOfPerson">{{this.title}}</span>
          </el-row>
-         <el-row style="display:flex">
+         <el-row style="display:flex;padding-left:10px;">
           <el-col :span="8">
             <img src="@/assets/img/ic_gold.png" class="img icon"/>
           </el-col>
@@ -13,7 +13,7 @@
             <span class="detailFontOfPerson" style="margin-top: 10px">{{this.topTen[0] ? this.topTen[0].name : ''}}</span>
           </el-col>
           <el-col :span="8">
-            <span class="detailFontOfPerson icon">{{this.topTen[0] ? this.topTen[0].time : ''}}</span>
+            <span class="detailFontOfPerson icon">{{this.topTen[0] ? this.topTen[0].time.toFixed(2) : ''}}{{symbol}}</span>
           </el-col>
          </el-row>
       </el-row>
@@ -26,7 +26,7 @@
             <span class="subtitle">{{this.topTen[1] ? this.topTen[1].name : ''}}</span>
           </el-col>
           <el-col :span="8" class="listContentOfPerson">
-            <span class="subtitle">{{this.topTen[1] ? this.topTen[1].time : ''}}</span>
+            <span class="subtitle">{{this.topTen[1] ? this.topTen[1].time.toFixed(2) : ''}}{{symbol}}</span>
           </el-col>
         </el-row>
         <el-row class="listHeightOfPerson">
@@ -37,18 +37,18 @@
             <span class="subtitle">{{this.topTen[2] ? this.topTen[2].name : ''}}</span>
           </el-col>
           <el-col :span="8" class="listContentOfPerson">
-            <span class="subtitle">{{this.topTen[2] ? this.topTen[2].time : ''}}</span>
+            <span class="subtitle">{{this.topTen[2] ? this.topTen[2].time.toFixed(2) : ''}}{{symbol}}</span>
           </el-col>
         </el-row>
         <el-row class="listHeightOfPerson" v-for="(person, index) in afterThird" :key="index">
           <el-col :span="8" class="listContentOfPerson">
-            <span class="subtitle">{{index + 3}}</span>
+            <span class="subtitle">{{index + 4}}</span>
           </el-col>
           <el-col :span="8" class="listContentOfPerson">
             <span class="subtitle">{{person.name}}</span>
           </el-col>
           <el-col :span="8" class="listContentOfPerson">
-            <span class="subtitle">{{person.time}}</span>
+            <span class="subtitle">{{person.time.toFixed(2)}}{{symbol}}</span>
           </el-col>
         </el-row>
       </el-row>
@@ -57,7 +57,7 @@
 
 <script>
 export default {
-  props: ['title', 'topTen', 'afterThird']
+  props: ['title', 'topTen', 'afterThird', 'symbol']
 }
 </script>
 

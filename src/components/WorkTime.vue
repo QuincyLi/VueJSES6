@@ -2,24 +2,24 @@
   <div class="wrap">
     <Header :options='options' @selectChange='selectChange' :title='title' />
     <el-row class="center-con">
-      <el-col :span="17" class="announcement">
+      <div class="announcement">
         <el-row>
-          <el-col :span="1">
+          <el-col :span="2">
             <span class="title">排名</span>
           </el-col>
-          <el-col :span="9">
+          <el-col :span="7">
             <span class="title" style="color:#f56c6c">0-50h</span>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="7">
             <span class="title" style="color:#409EFF">51-70h</span>
           </el-col>
           <el-col :span="6">
             <span class="title" style="color:#67c23a">&#62;70</span>
           </el-col>
         </el-row>
-        <el-row class="personalDetail" v-for="(person, index) in personalData" :key="index">
+        <el-row class="personalDetail" v-for="(person, index) in personalData.slice(min,min+13)" :key="index">
           <el-col :span="1">
-            <span class="title">{{index + 1}}</span>
+            <span class="title">{{min + index+1}}</span>
           </el-col>
           <el-col :span="23" style="position:relative;">
             <el-progress 
@@ -32,25 +32,36 @@
               {{person.name}}
             </span>
             <span class="personalTime">
-              {{person.time}}
+              {{person.time.toFixed(2)}}h
             </span>
           </el-col>
         </el-row>
-      </el-col>
-      <el-col :span="7" class="announcement">
-        <el-col :span="11" style="margin:0 10px;height: 100%;">
+        <el-row class='mask'>
+          <el-col :span='23' :offset='1' style='height:100%;'>
+            <el-col :span="10" style='border-right:1px solid #ddd;height:100%;'>
+            </el-col>
+            <el-col :span="4" style='border-right:1px solid #ddd;height:100%'>
+            </el-col>
+          </el-col>
+        </el-row>
+      </div>
+      <dl class="rank-box">
+        <dt style="float: left;margin:0 10px;height: 100%;width: 250px">
           <PersonalAnnounce 
           :title="personalTitle" 
           :topTen="personalData" 
-          :afterThird="afterThird"/>
-        </el-col>
-        <el-col :span="11">
+          :afterThird="afterThird"
+          :symbol="'h'"
+         />
+        </dt>
+        <dd style='float: left;width:250px'>
           <Announcement 
           :title="teamTitle"
-          :teamData='teamData' 
+          :teamData='teamData'
+           :symbol="'h/人'" 
           />
-        </el-col>
-      </el-col>
+        </dd>
+      </dl>
     </el-row>
   </div>
 </template>
@@ -73,6 +84,7 @@ export default {
       afterThird: [],
       options: [],
       title: '深蓝中控奋斗值',
+      min:0,
       getStatus: (time) => {
         if (time < 50) {
           return 'exception'
@@ -95,6 +107,7 @@ export default {
           const {errcode,message,data} = res ;
           if(errcode == 0){ 
             this.personalData = data;
+            this.afterThird = data.slice(3, 10);
           }else {
             errorInfo(errcode,message);
           }
@@ -120,6 +133,7 @@ export default {
   },
   created(){
     this.$nextTick(()=>{
+      console.log(this)
       getReq('/query/excel/names').then(res=>{
           const {errcode,message,data} = res ;
           if(errcode == 0){ 
@@ -127,7 +141,13 @@ export default {
           }else {
             errorInfo(errcode,message);
           }
-      })
+      });
+      setInterval(()=>{
+        this.min+=13;
+        if(this.min>this.personalData.length){
+          this.min=0;
+        }
+      },10000);
     })
   } 
 }
@@ -137,8 +157,8 @@ export default {
 .title {
   display:block;
   text-align: center;
-  line-height: 40px;
-  font-size: 25px;
+  line-height: 24px;
+  font-size: 15px;
   font-weight: 700
 }
 .personalDetail {
@@ -153,8 +173,15 @@ export default {
   left: 15px;
 }
 .announcement {
-  height: 830px;
-  overflow: auto;
+  position:relative;
+  float: left;
+  width: 700px;
+  height: 100vh;
+  overflow-y: scroll;
+}
+.rank-box{
+  float: left;
+  width: 600px;
 }
 .personalTime {
   position: absolute;
@@ -163,5 +190,12 @@ export default {
   font-size: 14px;
   top: 2px;
   right: 25px;
+}
+.mask{
+  position:absolute;
+  top:0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
 }
 </style>

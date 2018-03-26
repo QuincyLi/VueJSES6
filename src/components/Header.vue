@@ -1,6 +1,6 @@
 <template>
     <div class="page-header">
-      <div class="center-con">
+      <div class="center-con" style='padding:0 50px;'>
         <span class="title">{{title}}</span>
         <el-select 
           v-model="value" 
@@ -16,11 +16,22 @@
             >
           </el-option>
         </el-select>
+        <nav class='nav-bar'>
+          <router-link to='/workFlow'>
+              workFlow
+          </router-link>
+          <router-link to='/worktime'>
+              worktime
+          </router-link>
+          <router-link to='/carousel'>
+              carousel
+          </router-link>
+        </nav>
         <span class="date">
-            {{getDate}}
+            {{startDate?(startDate + '~' + endDate):''}}
         </span>
         <span class="remainingDate">
-            {{toEndDatetime}}
+          {{(toEndDateTimestamp - time)|countTime}}
         </span>
       </div>
         
@@ -37,7 +48,9 @@ import { getReq,errorInfo } from '@/api/api'
         value: '',
         endDate: '',
         startDate: '',
-        toEndDatetime: ''
+        toEndDatetime: '',
+        toEndDateTimestamp: 0,
+        time: 0
       }
     },
     props: ["options", "title"],
@@ -48,32 +61,31 @@ import { getReq,errorInfo } from '@/api/api'
         this.$emit('selectChange',this.value);
         getReq(`/query/redmine/${this.value}/cycle`).then((res) => {
           if(!res.data) return
-          const {endDate, startDate, toEndDatetime} = res.data;
+          const {endDate, startDate, toEndDatetime, toEndDateTimestamp} = res.data;
           this.endDate = endDate;
           this.startDate = startDate;
           this.toEndDatetime = toEndDatetime;
+          this.toEndDateTimestamp = toEndDateTimestamp
         });
-      }
-    },
-    computed: {
-      getDate: () => {
-        return '2018.2.21~2018.2.28'
       }
     },
     methods: {
       selecChange(val) {
         this.$emit('selectChange', val);
         getReq(`/query/redmine/${val}/cycle`).then((res) => {
-          const {endDate, startDate, toEndDatetime} = res.data;
+          const {endDate, startDate, toEndDatetime, toEndDateTimestamp} = res.data;
           this.endDate = endDate;
           this.startDate = startDate;
           this.toEndDatetime = toEndDatetime;
+          this.toEndDateTimestamp = toEndDateTimestamp
         });
       }
     },
     created(){
       this.$nextTick(()=>{
-
+         setInterval(() => {
+        this.time++;
+      }, 1000)
       })
     }
   }
@@ -87,6 +99,12 @@ import { getReq,errorInfo } from '@/api/api'
     line-height: 60px;
     height: 60px;
     margin-bottom: 20px;
+}
+.nav-bar{
+  font-size: 24px;
+}
+.nav-bar a {
+  color: #fff;
 }
 .title{
   color: #FFFFFF;

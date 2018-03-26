@@ -2,9 +2,9 @@
   <div class="wrap">
     <Header :options='options' @selectChange='selectChange' :title='bigTitle' />
     <el-row class="center-con">
-      <el-col :span="21">
-        <el-row class="progressBar">
-          <el-col :span="2" 
+      <div style='float:left;width:1000px;'>
+        <ul class="progressBar">
+          <li style='width:100px;'
           v-for="(percentage, index) in percentages" 
           :key="index" 
           :class="percentageIndex===index?'percentage-active':''">
@@ -12,22 +12,22 @@
               <el-progress type="circle" :percentage="percentage.ratio" :width='90' />
               <span class="subtitle">{{percentage.titleOrName}}</span>
             </div>
-          </el-col>
-        </el-row>
+          </li>
+        </ul>
         <el-row class="displayDetail">
           <el-row class="personalDetail" 
             v-for="person in personalData" 
             :key="person.name">
             <el-row class="personalName">
               <el-col>
-                <span>{{person.titleOrName}}</span>
+                <span>{{person.titleOrName}}组</span>
               </el-col>
             </el-row>
             <el-row style="margin-top: 20px;display:flex;" 
               v-for="(userStory,userIndex) in person.child" 
               :key="userIndex">
               <el-col :span="1" class="number">
-                <span>{{userIndex}}</span>
+                <span>{{userIndex+1}}</span>
               </el-col>
               <el-col :span="23" style="position:relative;margin:auto;">
                 <el-progress 
@@ -42,13 +42,14 @@
             </el-row>
           </el-row>
         </el-row>
-      </el-col>
-      <el-col :span="3" class="announcement">
+      </div>
+      <div class="announcement" style='float:left;width:250px;'>
         <Announcement 
           :title="title"
-          :teamData='teamData' 
+          :teamData='teamData'
+          :symbol="'%'" 
           />
-      </el-col>
+      </div>
     </el-row>
   </div>
 </template>
@@ -156,7 +157,7 @@ export default {
 <style scoped>
 .progressBar{
   display: flex;
-  background: rgba(235, 237, 240, 1)
+  background: #fff
 }
 .content{
   margin: auto;
@@ -180,7 +181,7 @@ export default {
 }
 .userStory{
   position: absolute;
-  top: 0;
+  top: 2px;
   left: 15px;
 }
 .number{
@@ -188,7 +189,9 @@ export default {
   margin: auto;
 }
 .displayDetail {
-  height: 750px;
+  height: auto;
+  padding-bottom: 20px;
+  padding-left: 20px;
   overflow: auto;
 }
 </style>
