@@ -29,10 +29,8 @@ export default{
           }
       });
       setInterval(() => {
-        try{
+        if(this.$refs.pptCarousel) {
           this.$refs.pptCarousel.next();
-        }catch(e){
-          this.$refs.pptCarousel.setActiveItem(0);
         }
       }, 6000);
       setTimeout(() => {
