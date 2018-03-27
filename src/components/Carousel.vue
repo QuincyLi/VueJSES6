@@ -32,7 +32,7 @@ export default{
         try{
           this.$refs.pptCarousel.next();
         }catch(e){
-          return;
+          this.$refs.pptCarousel.setActiveItem(0);
         }
       }, 6000);
       setTimeout(() => {

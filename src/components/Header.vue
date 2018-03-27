@@ -45,7 +45,7 @@ import { getReq,errorInfo } from '@/api/api'
     props: ["options", "title"],
     watch: {
       options(newVal){
-        const option = newVal[newVal.length-1];
+        const option = newVal[0];
         this.value =  option.value;
         this.$emit('selectChange',this.value);
         getReq(`/query/redmine/${this.value}/cycle`).then((res) => {
