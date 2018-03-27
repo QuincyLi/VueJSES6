@@ -1,5 +1,5 @@
 <template>
-  <el-carousel ref="pptCarousel" :interval='3000' indicator-position='none' arrow="never" style='width: 100%' height="830px">
+  <el-carousel ref="pptCarousel" :interval='3000' indicator-position='none' arrow="never" style='width: 100%' height="960px">
     <el-carousel-item v-for="(imgSrc,index) in imgSrcs" :key="index">
       <img :src="`http://192.168.10.180:8089/progress/${imgSrc}`" style="width: 100%"/>
     </el-carousel-item>
@@ -29,9 +29,15 @@ export default{
           }
       });
       setInterval(() => {
-        // console.log(this.$refs);
-        this.$refs.pptCarousel.next();
-      }, 3000)
+        try{
+          this.$refs.pptCarousel.next();
+        }catch(e){
+          return;
+        }
+      }, 6000);
+      setTimeout(() => {
+        this.$router.push('/')
+      }, 35000);
     })
   }
 }

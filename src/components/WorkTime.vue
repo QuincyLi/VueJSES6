@@ -141,6 +141,11 @@ export default {
             errorInfo(errcode,message);
           }
       });
+      
+      setTimeout(() => {
+        this.$router.push('/workflow')
+      }, 20000);
+
       setInterval(()=>{
         this.min+=13;
         if(this.min>this.personalData.length){

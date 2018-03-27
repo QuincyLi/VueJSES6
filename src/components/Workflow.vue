@@ -35,9 +35,12 @@
                     v-for="(userStory,userIndex) in person.child" 
                     :key="userIndex">
                     <el-col :span="1" class="number">
+                    <div class="circle" style="background-color: rgb(103, 194, 58);"></div>
+                    </el-col>
+                    <el-col :span="1" class="number">
                       <span>{{userIndex+1}}</span>
                     </el-col>
-                    <el-col :span="23" style="position:relative;margin:auto;">
+                    <el-col :span="22" style="position:relative;margin:auto;">
                       <el-progress 
                       :percentage="userStory.ratio" 
                       :stroke-width="22" 
@@ -76,7 +79,7 @@ export default {
   },
   data () {
     return {
-      title: '上一迭代 冲刺榜',
+      title: '迭代冲刺榜',
       isSuccess: (percentage) => {
         if (percentage === 100) {
           return 'success'
@@ -160,6 +163,9 @@ export default {
       });
     })
 
+    setTimeout(() => {
+        this.$router.push('/carousel')
+      }, 20000);
     // setInterval(() => {
     //   let name = '';
     //   if(this.highLightInd < this.percentages.length){
@@ -215,5 +221,12 @@ export default {
   padding-bottom: 20px;
   padding-left: 20px;
   overflow: auto;
+}
+.circle{
+  width: 10px;
+  height: 10px;
+  
+  border-radius: 50%;
+  margin: 0 auto;
 }
 </style>
