@@ -17,11 +17,8 @@ export default new Router({
       path: '/',
       name: 'Worktime',
       component: WorkTime
-    }, {
-      path: '/worktime',
-      name: 'Worktime',
-      component: WorkTime
-    }, {
+    },
+    {
       path: '/workflow',
       name: 'Workflow',
       component: Workflow
