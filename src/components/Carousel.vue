@@ -1,5 +1,5 @@
 <template>
-  <el-carousel indicator-position="outside" style='width: 100%' height="830px">
+  <el-carousel :interval='2000' autoplay='true' style='width: 100%' height="830px">
     <el-carousel-item v-for="(imgSrc,index) in imgSrcs" :key="index">
       <img :src="`http://192.168.10.180:8089/progress/${imgSrc}`" style="width: 100%"/>
     </el-carousel-item>

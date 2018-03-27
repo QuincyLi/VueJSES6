@@ -1,6 +1,6 @@
 <template>
     <div class="page-header">
-      <div class="center-con" style='padding:0 50px;'>
+      <div class="center-con" style='padding:0 15px;'>
         <span class="title">{{title}}</span>
         <el-select 
           v-model="value" 

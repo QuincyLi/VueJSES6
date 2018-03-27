@@ -2,7 +2,7 @@
   <div class="wrap">
     <Header :options='options' @selectChange='selectChange' :title='title' />
     <el-row class="center-con">
-      <div class="announcement">
+      <el-col :span="14" class="announcement">
         <el-row>
           <el-col :span="2">
             <span class="title">排名</span>
@@ -44,8 +44,8 @@
             </el-col>
           </el-col>
         </el-row>
-      </div>
-      <dl class="rank-box">
+      </el-col>
+      <el-col :span="10" class="rank-box">
         <dt style="float: left;margin:0 10px;height: 100%;width: 250px">
           <PersonalAnnounce 
           :title="personalTitle" 
@@ -61,7 +61,7 @@
            :symbol="'h/人'" 
           />
         </dd>
-      </dl>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -133,7 +133,6 @@ export default {
   },
   created(){
     this.$nextTick(()=>{
-      console.log(this)
       getReq('/query/excel/names').then(res=>{
           const {errcode,message,data} = res ;
           if(errcode == 0){ 
@@ -175,13 +174,10 @@ export default {
 .announcement {
   position:relative;
   float: left;
-  width: 700px;
-  height: 100vh;
   overflow-y: scroll;
 }
 .rank-box{
   float: left;
-  width: 600px;
 }
 .personalTime {
   position: absolute;

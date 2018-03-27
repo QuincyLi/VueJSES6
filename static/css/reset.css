@@ -61,6 +61,7 @@ input{outline: none;}
 .clear {clear:both;}
 @media screen and (max-width: 1250px){
     body{
-      width: 750px;
+      width: 100%;
+      display: inline;
     }
   };

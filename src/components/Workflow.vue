@@ -2,12 +2,13 @@
   <div class="wrap">
     <Header :options='options' @selectChange='selectChange' :title='bigTitle' />
     <el-row class="center-con">
-      <div style='float:left;width:1000px;'>
+      <el-col :span="19" style='float:left;'>
         <ul class="progressBar">
-          <li style='width:100px;'
+          <li style='width:110px;padding: 10px;'
           v-for="(percentage, index) in percentages" 
-          :key="index" 
-          :class="percentageIndex===index?'percentage-active':''">
+          :ref='percentage.titleOrName'
+          :key="index"
+          :class="percentageIndex === index?'percentage-active':''">
             <div class="content" @click='checkGroup(index)'>
               <el-progress type="circle" :percentage="percentage.ratio" :width='90' />
               <span class="subtitle">{{percentage.titleOrName}}</span>
@@ -17,8 +18,9 @@
           <marquee 
             behavior="scroll"
             direction="up"
-            scrolldelay="5"
+            scrolldelay="200"
             height="500px"
+            loop='-1'
           >
             <el-row class="displayDetail">
                 <el-row class="personalDetail" 
@@ -49,14 +51,14 @@
                 </el-row>
             </el-row>
           </marquee>
-      </div>
-      <div class="announcement" style='float:left;width:250px;'>
+      </el-col>
+      <el-col :span="5" style='float:left;width:250px;'>
         <Announcement 
           :title="title"
           :teamData='teamData'
           :symbol="'%'" 
           />
-      </div>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -85,7 +87,8 @@ export default {
       percentages: [],
       percentageIndex: '',
       personalData: [],
-      teamData: []
+      teamData: [],
+      highLightInd: 0
     }
   },
   methods: {
@@ -156,6 +159,18 @@ export default {
           }
       });
     })
+
+    // setInterval(() => {
+    //   let name = '';
+    //   if(this.highLightInd < this.percentages.length){
+    //     this.checkGroup(this.highLightInd);
+    //     this.highLightInd += 1;
+    //   } else{
+    //     this.highLightInd = 0;
+    //     this.checkGroup(this.highLightInd);
+    //     this.highLightInd += 1;
+    //   }
+    // }, 10000);
   } 
 }
 </script>
@@ -175,8 +190,8 @@ export default {
   min-height: 830px;
 }
 .percentage-active{
-   background-color: #332FEF;
-   color: #fff
+   background-color: #deeeff;
+   color: #20a0ff;
 }
 .personalDetail{
   height: auto;
