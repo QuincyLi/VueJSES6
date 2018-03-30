@@ -132,6 +132,7 @@ export default {
     }
   },
   created(){
+
     this.$nextTick(()=>{
       getReq('/query/excel/names').then(res=>{
           const {errcode,message,data} = res ;
@@ -142,10 +143,6 @@ export default {
           }
       });
       
-      setTimeout(() => {
-        this.$router.push('/workflow')
-      }, 20000);
-
       setInterval(()=>{
         this.min+=13;
         if(this.min>this.personalData.length){
@@ -153,7 +150,12 @@ export default {
         }
       },10000);
     })
-  } 
+  },
+  mounted(){
+    setTimeout(() => {
+        this.$router.push('/workflow')
+      }, 20000);
+  }
 }
 </script>
 

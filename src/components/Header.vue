@@ -46,7 +46,11 @@ import { getReq,errorInfo } from '@/api/api'
     watch: {
       options(newVal){
         const option = newVal[0];
-        this.value =  option.value;
+        if(this.title !== '深蓝中控奋斗值'){
+          this.value = localStorage.getItem('value', this.value) ? localStorage.getItem('value', this.value) : option.value;
+        }else{
+           this.value = option.value;
+        }
         this.$emit('selectChange',this.value);
         getReq(`/query/redmine/${this.value}/cycle`).then((res) => {
           if(!res.data) return
@@ -61,6 +65,7 @@ import { getReq,errorInfo } from '@/api/api'
     methods: {
       selecChange(val) {
         this.$emit('selectChange', val);
+        localStorage.setItem('value', val);
         getReq(`/query/redmine/${val}/cycle`).then((res) => {
           const {endDate, startDate, toEndDatetime, toEndDateTimestamp} = res.data;
           this.endDate = endDate;
@@ -72,9 +77,12 @@ import { getReq,errorInfo } from '@/api/api'
     },
     created(){
       this.$nextTick(()=>{
-         setInterval(() => {
-        this.time++;
-      }, 1000)
+        setInterval(() => {
+          this.time++;
+        }, 1000)
+        if(localStorage.getItem('value', this.value)) {
+          this.value = localStorage.getItem('value', this.value);
+        }
       })
     }
   }

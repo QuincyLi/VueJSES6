@@ -15,45 +15,43 @@
             </div>
           </li>
         </ul>
+        <el-row id="scrollerParent" class="displayDetail">
           <marquee 
-            behavior="scroll"
+            behavior="alternate"
             direction="up"
-            scrolldelay="200"
-            height="500px"
-            loop='-1'
+            height="500"
           >
-            <el-row class="displayDetail">
-                <el-row class="personalDetail" 
-                  v-for="person in personalData" 
-                  :key="person.name">
-                  <el-row class="personalName">
-                    <el-col>
-                      <span>{{person.titleOrName}}组</span>
-                    </el-col>
-                  </el-row>
-                  <el-row style="margin-top: 20px;display:flex;" 
-                    v-for="(userStory,userIndex) in person.child" 
-                    :key="userIndex">
-                    <el-col :span="1" class="number">
-                    <div class="circle" style="background-color: rgb(103, 194, 58);"></div>
-                    </el-col>
-                    <el-col :span="1" class="number">
-                      <span>{{userIndex+1}}</span>
-                    </el-col>
-                    <el-col :span="22" style="position:relative;margin:auto;">
-                      <el-progress 
-                      :percentage="userStory.ratio" 
-                      :stroke-width="22" 
-                      :status="isSuccess(userStory.ratio)" 
-                      :show-text="true"></el-progress>
-                      <span class="userStory">
-                        {{userStory.titleOrName}}
-                      </span>
-                    </el-col>
-                  </el-row>
-                </el-row>
+            <el-row class="personalDetail" 
+              v-for="person in personalData" 
+              :key="person.name">
+              <el-row class="personalName">
+                <el-col>
+                  <span>{{person.titleOrName}}组</span>
+                </el-col>
+              </el-row>
+              <el-row style="margin-top: 20px;display:flex;" 
+                v-for="(userStory,userIndex) in person.child" 
+                :key="userIndex">
+                <el-col :span="1" class="number">
+                <div class="circle" style="background-color: rgb(103, 194, 58);"></div>
+                </el-col>
+                <el-col :span="1" class="number">
+                  <span>{{userIndex+1}}</span>
+                </el-col>
+                <el-col :span="22" style="position:relative;margin:auto;">
+                  <el-progress 
+                  :percentage="userStory.ratio" 
+                  :stroke-width="22" 
+                  :status="isSuccess(userStory.ratio)" 
+                  :show-text="true"></el-progress>
+                  <span class="userStory">
+                    {{userStory.titleOrName}}
+                  </span>
+                </el-col>
+              </el-row>
             </el-row>
           </marquee>
+        </el-row>
       </el-col>
       <el-col :span="5" style='float:left;width:250px;'>
         <Announcement 
@@ -91,12 +89,15 @@ export default {
       percentageIndex: '',
       personalData: [],
       teamData: [],
+      ScrollerPosition: 0,
+      clock: '',
       highLightInd: 0
     }
   },
   methods: {
     selectChange(val){
-      getReq(`/query/redmine/${val}`).then(res=>{
+      setTimeout(() => {
+        getReq(`/query/redmine/${val}`).then(res=>{
           const {errcode,message,data} = res ;
           if(errcode == 0){ 
             this.percentages = data;
@@ -104,8 +105,10 @@ export default {
           }else {
             errorInfo(errcode,message);
           }
-      });
-      getReq(`/query/redmine/${val}/rank`).then(res=>{
+        });
+      }, 3000)
+      setTimeout(() => {
+        getReq(`/query/redmine/${val}/rank`).then(res=>{
           const {errcode,message,data} = res ;
           if(errcode == 0){
             let teamData =[];
@@ -120,7 +123,8 @@ export default {
           }else {
             errorInfo(errcode,message);
           }
-      });
+        });
+      }, 3000);
     },
     checkGroup(index){
       this.percentageIndex = index;
@@ -162,10 +166,6 @@ export default {
           }
       });
     })
-
-    setTimeout(() => {
-        this.$router.push('/carousel')
-      }, 20000);
     // setInterval(() => {
     //   let name = '';
     //   if(this.highLightInd < this.percentages.length){
@@ -177,7 +177,12 @@ export default {
     //     this.highLightInd += 1;
     //   }
     // }, 10000);
-  } 
+  },
+  mounted:() => {
+    setTimeout(() => {
+        this.$router.push('/carousel')
+      }, 20000);
+  }
 }
 </script>
 
@@ -217,16 +222,22 @@ export default {
   margin: auto;
 }
 .displayDetail {
-  
+  position: relative;
+  height: 476px;
   padding-bottom: 20px;
   padding-left: 20px;
-  overflow: auto;
+  overflow: hidden;
 }
 .circle{
   width: 10px;
   height: 10px;
-  
   border-radius: 50%;
   margin: 0 auto;
+}
+.autoScroller{
+  width: 100%;
+  position:absolute;
+  top:0;
+  left:0;
 }
 </style>

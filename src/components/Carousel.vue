@@ -1,9 +1,9 @@
 <template>
-  <el-carousel ref="pptCarousel" :interval='3000' indicator-position='none' arrow="never" style='width: 100%' height="960px">
-    <el-carousel-item v-for="(imgSrc,index) in imgSrcs" :key="index">
-      <img :src="`http://192.168.10.180:8089/progress/${imgSrc}`" style="width: 100%"/>
-    </el-carousel-item>
-  </el-carousel>
+    <el-carousel ref="pptCarousel" :interval='3500' indicator-position='none' arrow="never" style='width: 100%;' height="960px">
+      <el-carousel-item v-for="(imgSrc,index) in imgSrcs" :key="index">
+        <img :src="`http://192.168.10.180:8089/progress/${imgSrc}`" style="width: 100%"/>
+      </el-carousel-item>
+    </el-carousel>
 </template>
 <script>
 /* eslint-disable */
@@ -28,15 +28,17 @@ export default{
             errorInfo(errcode,message);
           }
       });
-      setInterval(() => {
-        if(this.$refs.pptCarousel) {
-          this.$refs.pptCarousel.next();
-        }
-      }, 6000);
-      setTimeout(() => {
-        this.$router.push('/')
-      }, 35000);
+      // setInterval(() => {
+      //   if(this.$refs.pptCarousel) {
+      //     this.$refs.pptCarousel.next();
+      //   }
+      // }, 3500);
     })
+  },
+  mounted(){
+    setTimeout(() => {
+      this.$router.push('/')
+    }, 38500);
   }
 }
 </script>
@@ -50,10 +52,11 @@ export default{
   }
   
   .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
+    background-color: #020111;
   }
   
   .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
+    background-color: #020111;
   }
+  
 </style>

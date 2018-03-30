@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {MessageBox} from 'element-ui'
 // 测试
-let baseApi = 'http://192.168.10.180:8089/progress'
+let baseApi = 'http://192.168.10.73:8089/progress'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
 
