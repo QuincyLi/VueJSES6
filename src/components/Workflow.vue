@@ -106,7 +106,7 @@ export default {
             errorInfo(errcode,message);
           }
         });
-      }, 3000)
+      }, 1500);
       setTimeout(() => {
         getReq(`/query/redmine/${val}/rank`).then(res=>{
           const {errcode,message,data} = res ;
@@ -166,6 +166,9 @@ export default {
           }
       });
     })
+    setTimeout(() => {
+        this.$router.push('/carousel')
+      }, 25000);
     // setInterval(() => {
     //   let name = '';
     //   if(this.highLightInd < this.percentages.length){
@@ -177,11 +180,6 @@ export default {
     //     this.highLightInd += 1;
     //   }
     // }, 10000);
-  },
-  mounted:() => {
-    setTimeout(() => {
-        this.$router.push('/carousel')
-      }, 20000);
   }
 }
 </script>

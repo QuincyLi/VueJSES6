@@ -1,7 +1,7 @@
 <template>
     <el-carousel ref="pptCarousel" :interval='3500' indicator-position='none' arrow="never" style='width: 100%;' height="960px">
       <el-carousel-item v-for="(imgSrc,index) in imgSrcs" :key="index">
-        <img :src="`http://192.168.10.180:8089/progress/${imgSrc}`" style="width: 100%"/>
+        <img :src="`http://192.168.10.73:8089/progress/${imgSrc}`" style="width: 100%"/>
       </el-carousel-item>
     </el-carousel>
 </template>
