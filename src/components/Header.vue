@@ -49,7 +49,7 @@ import { getReq,errorInfo } from '@/api/api'
         if(this.title !== '深蓝中控奋斗值'){
           this.value = localStorage.getItem('value', this.value) ? localStorage.getItem('value', this.value) : option.value;
         }else{
-           this.value = option.value;
+          this.value = localStorage.getItem('fighting', this.value) ? localStorage.getItem('fighting', this.value) : option.value;
         }
         this.$emit('selectChange',this.value);
         getReq(`/query/redmine/${this.value}/cycle`).then((res) => {
@@ -65,7 +65,11 @@ import { getReq,errorInfo } from '@/api/api'
     methods: {
       selecChange(val) {
         this.$emit('selectChange', val);
-        localStorage.setItem('value', val);
+        if(this.title !== '深蓝中控奋斗值'){
+          localStorage.setItem('value', val);
+        }else{
+          localStorage.setItem('fighting', val);
+        }
         getReq(`/query/redmine/${val}/cycle`).then((res) => {
           const {endDate, startDate, toEndDatetime, toEndDateTimestamp} = res.data;
           this.endDate = endDate;

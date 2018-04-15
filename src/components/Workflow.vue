@@ -96,7 +96,6 @@ export default {
   },
   methods: {
     selectChange(val){
-      setTimeout(() => {
         getReq(`/query/redmine/${val}`).then(res=>{
           const {errcode,message,data} = res ;
           if(errcode == 0){ 
@@ -105,26 +104,24 @@ export default {
           }else {
             errorInfo(errcode,message);
           }
+        }).then(() => {
+          getReq(`/query/redmine/${val}/rank`).then(res=>{
+            const {errcode,message,data} = res ;
+            if(errcode == 0){
+              let teamData =[];
+              data.map(item=>{
+                const itemObj  = {
+                  name: item.titleOrName,
+                  ratio: item.ratio
+                }
+                teamData.push(itemObj);
+              }) 
+              this.teamData = teamData;
+            }else {
+              errorInfo(errcode,message);
+            }
+          });
         });
-      }, 1500);
-      setTimeout(() => {
-        getReq(`/query/redmine/${val}/rank`).then(res=>{
-          const {errcode,message,data} = res ;
-          if(errcode == 0){
-            let teamData =[];
-            data.map(item=>{
-              const itemObj  = {
-                name: item.titleOrName,
-                ratio: item.ratio
-              }
-              teamData.push(itemObj);
-            }) 
-            this.teamData = teamData;
-          }else {
-            errorInfo(errcode,message);
-          }
-        });
-      }, 3000);
     },
     checkGroup(index){
       this.percentageIndex = index;
@@ -167,7 +164,7 @@ export default {
       });
     })
     setTimeout(() => {
-        this.$router.push('/carousel')
+        this.$router.push('/')
       }, 25000);
     // setInterval(() => {
     //   let name = '';
