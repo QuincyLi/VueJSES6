@@ -2,15 +2,15 @@
   <div class="wrap">
     <Header :options='options' @selectChange='selectChange' :title='bigTitle' />
     <el-row class="center-con">
-      <el-col :span="19" style='float:left;'>
+      <el-col :span="18" style='float:left;'>
         <ul class="progressBar">
-          <li style='width:110px;padding: 10px;'
+          <li style='width:100px;padding: 10px;'
           v-for="(percentage, index) in percentages" 
           :ref='percentage.titleOrName'
           :key="index"
           :class="percentageIndex === index?'percentage-active':''">
             <div class="content" @click='checkGroup(index)'>
-              <el-progress type="circle" :percentage="percentage.ratio" :width='90' />
+              <el-progress type="circle" :percentage="percentage.ratio" :width='80' />
               <span class="subtitle">{{percentage.titleOrName}}</span>
             </div>
           </li>
@@ -53,7 +53,7 @@
           </marquee>
         </el-row>
       </el-col>
-      <el-col :span="5" style='float:left;width:250px;'>
+      <el-col :span="6" style='float:left;width:250px;'>
         <Announcement 
           :title="title"
           :teamData='teamData'
@@ -70,7 +70,7 @@ import Header from './Header'
 import Announcement from './Announcement'
 import { getReq,errorInfo } from '@/api/api'
 export default {
-  name: 'Workflow',
+  name: 'OAWorkflow',
   components: {
     Header,
     Announcement
@@ -163,9 +163,6 @@ export default {
           }
       });
     })
-    setTimeout(() => {
-        this.$router.push('/')
-      }, 25000);
   }
 }
 </script>

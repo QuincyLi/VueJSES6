@@ -2,7 +2,7 @@
   <div class="wrap">
     <Header :options='options' @selectChange='selectChange' :title='title' />
     <el-row class="center-con">
-      <el-col :span="14" class="announcement">
+      <el-col :span="12" class="announcement">
         <el-row>
           <el-col :span="2">
             <span class="title">排名</span>
@@ -17,7 +17,7 @@
             <span class="title" style="color:#67c23a">&#62;70</span>
           </el-col>
         </el-row>
-        <el-row class="personalDetail" v-for="(person, index) in personalData.slice(min,min+13)" :key="index">
+        <el-row class="personalDetail" v-for="(person, index) in personalData.slice(min,min+7)" :key="index">
           <el-col :span="1">
             <span class="title">{{min + index+1}}</span>
           </el-col>
@@ -45,7 +45,7 @@
           </el-col>
         </el-row>
       </el-col>
-      <el-col :span="10" class="rank-box">
+      <el-col :span="12" class="rank-box">
         <dt style="float: left;margin:0 10px;height: 100%;width: 250px">
           <PersonalAnnounce 
           :title="personalTitle" 
@@ -73,7 +73,7 @@ import Announcement from './Announcement'
 import PersonalAnnounce from './PersonalAnnounce'
 import { getReq,errorInfo } from '@/api/api'
 export default {
-  name: 'WorkTime',
+  name: 'OAWorkTime',
   data: () => {
     return {
       teamTitle: '上月 小组奋斗榜',
@@ -144,17 +144,12 @@ export default {
       });
       
       setInterval(()=>{
-        this.min+=13;
+        this.min += 7;
         if(this.min>this.personalData.length){
           this.min=0;
         }
       },10000);
     })
-  },
-  mounted(){
-    setTimeout(() => {
-        this.$router.push('/workflow')
-      }, 25000);
   }
 }
 </script>

@@ -6,7 +6,7 @@
           v-model="value" 
           placeholder="请选择" 
           class="sprint"
-          @change="selecChange" 
+          @change="selecChange"
         >
           <el-option
             v-for="item in options"

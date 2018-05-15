@@ -2,8 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/Index'
 import Workflow from '@/components/Workflow'
-import WorkTime from '@/components/workTime'
-import Carousel from '@/components/Carousel'
+import WorkTime from '@/components/WorkTime'
+import OAWorkflow from '@/components/OAWorkflow'
+import OAWorkTime from '@/components/OAWorkTime'
 
 Vue.use(Router)
 
@@ -24,9 +25,14 @@ export default new Router({
       component: Workflow
     },
     {
-      path: '/carousel',
-      name: 'Carousel',
-      component: Carousel
+      path: '/oaworkflow',
+      name: 'OAWorkflow',
+      component: OAWorkflow
+    },
+    {
+      path: '/oaworktime',
+      name: 'OAWorkTime',
+      component: OAWorkTime
     }
   ]
 })
