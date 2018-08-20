@@ -80,6 +80,9 @@ import { getReq,errorInfo } from '@/api/api'
       }
     },
     created(){
+      window.addEventListener('message', (e) => {
+        console.log(e.data);
+      });
       this.$nextTick(()=>{
         setInterval(() => {
           this.time++;
